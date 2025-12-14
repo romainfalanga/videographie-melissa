@@ -1,0 +1,2396 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vidéographie - Journal Intime de Mélissa</title>
+    
+    <!-- CDN External Resources -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ==================== VARIABLES & RESET ==================== */
+        :root {
+            --primary: #8B5CF6;
+            --primary-dark: #7C3AED;
+            --primary-light: #A78BFA;
+            --secondary: #EC4899;
+            --secondary-light: #F9A8D4;
+            --accent: #F59E0B;
+            --bg-primary: #0F172A;
+            --bg-secondary: #1E293B;
+            --bg-card: #1E293B;
+            --text-primary: #F1F5F9;
+            --text-secondary: #94A3B8;
+            --border: #334155;
+            --success: #10B981;
+            --error: #EF4444;
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.15);
+            --shadow-lg: 0 10px 40px rgba(0, 0, 0, 0.25);
+            --shadow-xl: 0 20px 60px rgba(0, 0, 0, 0.35);
+            --gradient-primary: linear-gradient(135deg, #8B5CF6 0%, #EC4899 100%);
+            --gradient-card: linear-gradient(145deg, #1E293B 0%, #0F172A 100%);
+            --blur: blur(20px);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* ==================== ANIMATED BACKGROUND ==================== */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(236, 72, 153, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(245, 158, 11, 0.1) 0%, transparent 50%);
+            animation: backgroundPulse 20s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes backgroundPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+
+        /* ==================== LOGIN PAGE ==================== */
+        .login-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .login-box {
+            background: var(--gradient-card);
+            border-radius: 24px;
+            padding: 60px 50px;
+            max-width: 480px;
+            width: 100%;
+            box-shadow: var(--shadow-xl);
+            border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            backdrop-filter: var(--blur);
+        }
+
+        .login-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gradient-primary);
+        }
+
+        .login-box::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.05) 0%, transparent 70%);
+            animation: rotate 30s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .login-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 42px;
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+
+        .login-header p {
+            color: var(--text-secondary);
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: var(--text-primary);
+            font-weight: 500;
+            font-size: 14px;
+            letter-spacing: 0.2px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 16px 20px;
+            background: rgba(15, 23, 42, 0.5);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            font-size: 15px;
+            color: var(--text-primary);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: rgba(15, 23, 42, 0.8);
+            box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .form-group input::placeholder {
+            color: var(--text-secondary);
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 18px;
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .btn-login::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(139, 92, 246, 0.4);
+        }
+
+        .btn-login:hover::before {
+            left: 100%;
+        }
+
+        .btn-login:active {
+            transform: translateY(0);
+        }
+
+        .error-message {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid var(--error);
+            color: var(--error);
+            padding: 14px;
+            border-radius: 10px;
+            margin-top: 20px;
+            font-size: 14px;
+            display: none;
+            animation: shake 0.5s;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-8px); }
+            20%, 40%, 60%, 80% { transform: translateX(8px); }
+        }
+
+        /* ==================== MAIN APP ==================== */
+        .app-container {
+            display: none;
+            min-height: 100vh;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ==================== HEADER ==================== */
+        .header {
+            background: rgba(30, 41, 59, 0.8);
+            backdrop-filter: var(--blur);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .header.scrolled {
+            box-shadow: var(--shadow-lg);
+            background: rgba(30, 41, 59, 0.95);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 24px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.5px;
+        }
+
+        .btn-logout {
+            padding: 12px 24px;
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--error);
+            border: 1px solid var(--error);
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 14px;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-logout:hover {
+            background: var(--error);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(239, 68, 68, 0.3);
+        }
+
+        /* ==================== MAIN CONTENT ==================== */
+        .main-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px;
+        }
+
+        /* ==================== NAVIGATION TABS ==================== */
+        .nav-tabs {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            background: rgba(30, 41, 59, 0.5);
+            padding: 8px;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            backdrop-filter: var(--blur);
+        }
+
+        .tab-btn {
+            flex: 1;
+            min-width: 140px;
+            padding: 14px 20px;
+            background: transparent;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 14px;
+            color: var(--text-secondary);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tab-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-primary);
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: -1;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-primary);
+            transform: translateY(-2px);
+        }
+
+        .tab-btn.active {
+            color: white;
+            background: var(--gradient-primary);
+            box-shadow: 0 8px 20px rgba(139, 92, 246, 0.3);
+        }
+
+        .tab-btn.active::before {
+            opacity: 1;
+        }
+
+        /* ==================== TAB CONTENT ==================== */
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ==================== CARD ==================== */
+        .card {
+            background: var(--gradient-card);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border);
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--gradient-primary);
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .card h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            margin-bottom: 24px;
+            color: var(--text-primary);
+            font-weight: 600;
+            letter-spacing: -0.5px;
+        }
+
+        /* ==================== BUTTONS ==================== */
+        .btn-primary {
+            padding: 14px 28px;
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 15px;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn-primary:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(139, 92, 246, 0.4);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        /* ==================== EMPTY STATE ==================== */
+        .empty-state {
+            text-align: center;
+            padding: 80px 40px;
+            color: var(--text-secondary);
+        }
+
+        .empty-state i {
+            font-size: 72px;
+            color: var(--primary-light);
+            margin-bottom: 24px;
+            opacity: 0.6;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .empty-state h3 {
+            font-size: 24px;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .empty-state p {
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        /* ==================== MODAL ==================== */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: var(--blur);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--gradient-card);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow-xl);
+            border: 1px solid var(--border);
+            animation: modalSlideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+        }
+
+        .modal-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--gradient-primary);
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                transform: translateY(-50px) scale(0.9);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+        }
+
+        .modal-header h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .btn-close {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid var(--error);
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            font-size: 20px;
+            cursor: pointer;
+            color: var(--error);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-close:hover {
+            background: var(--error);
+            color: white;
+            transform: rotate(90deg);
+        }
+
+        /* ==================== TOAST NOTIFICATIONS ==================== */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 3000;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .toast {
+            background: var(--bg-card);
+            padding: 18px 24px;
+            border-radius: 12px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            min-width: 320px;
+            animation: toastSlideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .toast::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 4px;
+            height: 100%;
+        }
+
+        .toast.success::before {
+            background: var(--success);
+        }
+
+        .toast.error::before {
+            background: var(--error);
+        }
+
+        .toast.info::before {
+            background: var(--primary);
+        }
+
+        @keyframes toastSlideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .toast i {
+            font-size: 20px;
+        }
+
+        .toast.success i {
+            color: var(--success);
+        }
+
+        .toast.error i {
+            color: var(--error);
+        }
+
+        .toast.info i {
+            color: var(--primary);
+        }
+
+        /* ==================== VIDEO GRID ==================== */
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 24px;
+            margin-top: 32px;
+        }
+
+        .video-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+        }
+
+        .video-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-primary);
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .video-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .video-card:hover::before {
+            opacity: 0.05;
+        }
+
+        .video-thumbnail {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+        }
+
+        .video-info {
+            padding: 20px;
+        }
+
+        .video-title {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+            font-size: 16px;
+            line-height: 1.4;
+        }
+
+        .video-date {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .video-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .tag {
+            padding: 6px 12px;
+            background: rgba(139, 92, 246, 0.15);
+            color: var(--primary-light);
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 500;
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .tag:hover {
+            background: rgba(139, 92, 246, 0.25);
+            transform: translateY(-2px);
+        }
+
+        .video-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-small {
+            flex: 1;
+            padding: 10px 16px;
+            font-size: 13px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .btn-watch {
+            background: var(--gradient-primary);
+            color: white;
+        }
+
+        .btn-watch:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(139, 92, 246, 0.3);
+        }
+
+        .btn-delete {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--error);
+            border: 1px solid var(--error);
+        }
+
+        .btn-delete:hover {
+            background: var(--error);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* ==================== JOURNAL ==================== */
+        .journal-entry {
+            background: rgba(30, 41, 59, 0.5);
+            border-left: 4px solid var(--primary);
+            padding: 24px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .journal-entry:hover {
+            background: rgba(30, 41, 59, 0.8);
+            transform: translateX(4px);
+        }
+
+        .journal-date {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .journal-text {
+            color: var(--text-primary);
+            line-height: 1.8;
+            white-space: pre-wrap;
+            font-size: 15px;
+        }
+
+        .journal-entry.highlighted {
+            border-left-color: var(--accent);
+            background: rgba(245, 158, 11, 0.1);
+            animation: highlight-pulse 2s ease;
+        }
+
+        @keyframes highlight-pulse {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(8px); }
+        }
+
+        /* ==================== AI CHAT ==================== */
+        .ai-chat-container {
+            background: rgba(15, 23, 42, 0.5);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            padding: 24px;
+            margin-top: 24px;
+        }
+
+        .ai-messages {
+            max-height: 400px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .ai-message {
+            display: flex;
+            gap: 12px;
+            animation: fadeInUp 0.4s ease;
+        }
+
+        .ai-message-user {
+            flex-direction: row-reverse;
+        }
+
+        .ai-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .ai-message-assistant .ai-avatar {
+            background: var(--gradient-primary);
+            color: white;
+        }
+
+        .ai-message-user .ai-avatar {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--accent);
+            border: 2px solid var(--accent);
+        }
+
+        .ai-bubble {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 16px 20px;
+            max-width: 80%;
+            line-height: 1.6;
+        }
+
+        .ai-message-assistant .ai-bubble {
+            border-top-left-radius: 4px;
+        }
+
+        .ai-message-user .ai-bubble {
+            border-top-right-radius: 4px;
+            background: rgba(139, 92, 246, 0.1);
+            border-color: var(--primary);
+        }
+
+        .ai-bubble p {
+            margin-bottom: 12px;
+        }
+
+        .ai-bubble p:last-child {
+            margin-bottom: 0;
+        }
+
+        .ai-bubble ul {
+            margin: 8px 0;
+            padding-left: 20px;
+        }
+
+        .ai-bubble li {
+            margin: 6px 0;
+            color: var(--text-secondary);
+        }
+
+        .ai-bubble strong {
+            color: var(--primary-light);
+        }
+
+        .ai-entry-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 12px;
+            background: rgba(139, 92, 246, 0.1);
+            border: 1px solid var(--primary);
+            border-radius: 8px;
+            color: var(--primary-light);
+            text-decoration: none;
+            font-size: 13px;
+            margin-top: 8px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .ai-entry-link:hover {
+            background: rgba(139, 92, 246, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .ai-suggestions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 16px;
+        }
+
+        .ai-suggestion {
+            padding: 8px 14px;
+            background: rgba(139, 92, 246, 0.1);
+            border: 1px solid var(--primary);
+            border-radius: 20px;
+            color: var(--primary-light);
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .ai-suggestion:hover {
+            background: var(--gradient-primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .ai-input-container {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .ai-input {
+            flex: 1;
+            padding: 14px 18px;
+            background: rgba(15, 23, 42, 0.8);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            font-size: 14px;
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+        }
+
+        .ai-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.1);
+        }
+
+        .btn-ai-send {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            border: none;
+            background: var(--gradient-primary);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .btn-ai-send:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(139, 92, 246, 0.4);
+        }
+
+        .btn-ai-send:active {
+            transform: translateY(0);
+        }
+
+        /* ==================== FILTERS ==================== */
+        .filters {
+            display: flex;
+            gap: 12px;
+            margin-top: 32px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        .filter-input,
+        .filter-select,
+        textarea {
+            padding: 14px 18px;
+            background: rgba(15, 23, 42, 0.5);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            font-size: 14px;
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .filter-input {
+            flex: 1;
+            min-width: 240px;
+        }
+
+        .filter-input:focus,
+        .filter-select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: rgba(15, 23, 42, 0.8);
+            box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.1);
+        }
+
+        .filter-select {
+            cursor: pointer;
+            min-width: 180px;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        /* ==================== SETTINGS ==================== */
+        .settings-section {
+            margin-bottom: 40px;
+        }
+
+        .settings-section h3 {
+            font-size: 20px;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+            font-weight: 600;
+        }
+
+        .api-test {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+
+        .status-indicator {
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status-success {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--success);
+            border: 1px solid var(--success);
+        }
+
+        .status-error {
+            background: rgba(239, 68, 68, 0.15);
+            color: var(--error);
+            border: 1px solid var(--error);
+        }
+
+        /* ==================== FONCTIONNEMENT PAGE ==================== */
+        .how-it-works {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .step-card {
+            background: rgba(15, 23, 42, 0.5);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 28px;
+            display: flex;
+            gap: 24px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .step-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--gradient-primary);
+        }
+
+        .step-card:hover {
+            background: rgba(15, 23, 42, 0.8);
+            transform: translateX(4px);
+        }
+
+        .step-number {
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
+            background: var(--gradient-primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            font-weight: 700;
+            flex-shrink: 0;
+            box-shadow: 0 8px 20px rgba(139, 92, 246, 0.3);
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step-content h3 {
+            font-size: 22px;
+            color: var(--text-primary);
+            margin-bottom: 14px;
+            font-weight: 600;
+        }
+
+        .step-content p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 14px;
+        }
+
+        .step-content ul {
+            list-style: none;
+            padding: 0;
+            margin: 16px 0;
+        }
+
+        .step-content li {
+            padding: 10px 0;
+            color: var(--text-primary);
+            line-height: 1.6;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .step-content li::before {
+            content: '';
+            min-width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--primary);
+            margin-top: 10px;
+        }
+
+        .step-tip {
+            background: rgba(139, 92, 246, 0.1);
+            border: 1px solid var(--primary);
+            border-radius: 12px;
+            padding: 14px 18px;
+            margin-top: 16px;
+            color: var(--primary-light);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .summary-box {
+            background: var(--gradient-card);
+            border: 2px solid var(--primary);
+            border-radius: 16px;
+            padding: 32px;
+            margin-top: 40px;
+        }
+
+        .summary-box h3 {
+            font-size: 24px;
+            color: var(--text-primary);
+            margin-bottom: 24px;
+            font-weight: 600;
+        }
+
+        .summary-timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .timeline-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px;
+            background: rgba(15, 23, 42, 0.5);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-item:hover {
+            background: rgba(15, 23, 42, 0.8);
+            transform: translateX(8px);
+        }
+
+        .timeline-item strong {
+            color: var(--primary-light);
+            min-width: 120px;
+            font-weight: 600;
+        }
+
+        .timeline-item span:nth-child(2) {
+            color: var(--text-secondary);
+            font-size: 20px;
+        }
+
+        .timeline-item span:last-child {
+            color: var(--text-primary);
+            flex: 1;
+        }
+
+        /* ==================== LOADING SPINNER ==================== */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* ==================== SCROLLBAR ==================== */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 6px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary);
+        }
+
+        /* ==================== RESPONSIVE ==================== */
+        @media (max-width: 1024px) {
+            .header-content {
+                padding: 20px 30px;
+            }
+
+            .main-content {
+                padding: 30px 20px;
+            }
+
+            .card {
+                padding: 30px 24px;
+            }
+
+            .video-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                gap: 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                padding: 16px 20px;
+            }
+
+            .logo h1 {
+                font-size: 22px;
+            }
+
+            .main-content {
+                padding: 24px 16px;
+            }
+
+            .nav-tabs {
+                flex-direction: column;
+                padding: 6px;
+            }
+
+            .tab-btn {
+                width: 100%;
+                min-width: auto;
+                justify-content: center;
+            }
+
+            .card {
+                padding: 24px 20px;
+                border-radius: 16px;
+            }
+
+            .card h2 {
+                font-size: 26px;
+            }
+
+            .video-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .modal-content {
+                padding: 30px 24px;
+            }
+
+            .toast {
+                min-width: auto;
+                max-width: calc(100vw - 40px);
+            }
+
+            .toast-container {
+                right: 10px;
+                left: 10px;
+                top: 10px;
+            }
+
+            .login-box {
+                padding: 40px 30px;
+            }
+
+            .login-header h1 {
+                font-size: 36px;
+            }
+
+            .ai-chat-container {
+                padding: 20px 16px;
+            }
+
+            .ai-messages {
+                max-height: 300px;
+            }
+
+            .ai-bubble {
+                max-width: 90%;
+                padding: 14px 16px;
+            }
+
+            .ai-input-container {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .ai-input {
+                width: 100%;
+            }
+
+            .btn-ai-send {
+                width: 100%;
+                height: 44px;
+            }
+
+            .ai-suggestions {
+                gap: 6px;
+            }
+
+            .ai-suggestion {
+                font-size: 12px;
+                padding: 6px 12px;
+            }
+
+            .step-card {
+                flex-direction: column;
+                padding: 20px;
+                gap: 16px;
+            }
+
+            .step-number {
+                width: 48px;
+                height: 48px;
+                font-size: 24px;
+            }
+
+            .step-content h3 {
+                font-size: 18px;
+            }
+
+            .summary-box {
+                padding: 24px 20px;
+            }
+
+            .timeline-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+
+            .timeline-item strong {
+                min-width: auto;
+            }
+
+            .timeline-item span:nth-child(2) {
+                display: none;
+            }
+
+            .filters {
+                flex-direction: column;
+            }
+
+            .filter-input,
+            .filter-select {
+                width: 100%;
+                min-width: auto;
+            }
+
+            .api-test {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-content {
+                padding: 14px 16px;
+            }
+
+            .logo h1 {
+                font-size: 20px;
+            }
+
+            .btn-logout {
+                padding: 10px 16px;
+                font-size: 13px;
+            }
+
+            .card h2 {
+                font-size: 22px;
+            }
+
+            .login-box {
+                padding: 32px 24px;
+            }
+
+            .login-header h1 {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- LOGIN PAGE -->
+    <div id="loginPage" class="login-container">
+        <div class="login-box">
+            <div class="login-header">
+                <h1>Vidéographie</h1>
+                <p>Bienvenue Mélissa ! Connecte-toi pour accéder à ton journal intime</p>
+            </div>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="username">Identifiant</label>
+                    <input type="text" id="username" placeholder="melissa" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Mot de passe</label>
+                    <input type="password" id="password" placeholder="Ton mot de passe" required>
+                </div>
+                <button type="submit" class="btn-login">
+                    Se connecter
+                </button>
+                <div id="loginError" class="error-message"></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MAIN APP -->
+    <div id="appContainer" class="app-container">
+        <header class="header" id="header">
+            <div class="header-content">
+                <div class="logo">
+                    <h1>Vidéographie</h1>
+                </div>
+                <button id="logoutBtn" class="btn-logout">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Déconnexion</span>
+                </button>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <!-- Navigation Tabs -->
+            <div class="nav-tabs">
+                <button class="tab-btn active" data-tab="fonctionnement">
+                    <i class="fas fa-lightbulb"></i>
+                    <span>Fonctionnement</span>
+                </button>
+                <button class="tab-btn" data-tab="videos">
+                    <i class="fas fa-film"></i>
+                    <span>Mes Vidéos</span>
+                </button>
+                <button class="tab-btn" data-tab="journal">
+                    <i class="fas fa-book"></i>
+                    <span>Mon Journal</span>
+                </button>
+                <button class="tab-btn" data-tab="settings">
+                    <i class="fas fa-cog"></i>
+                    <span>Paramètres</span>
+                </button>
+            </div>
+
+            <!-- FONCTIONNEMENT TAB (PAGE D'ACCUEIL) -->
+            <div id="fonctionnementTab" class="tab-content active">
+                <div class="card">
+                    <h2>💡 Comment ça marche ?</h2>
+                    <p style="color: var(--text-secondary); margin-bottom: 32px; font-size: 16px; line-height: 1.8;">
+                        Bienvenue dans ton espace de vidéographie personnel ! Voici comment utiliser cet outil pour capturer tes pensées et réflexions 📹✨
+                    </p>
+
+                    <div class="how-it-works">
+                        <!-- Step 1 -->
+                        <div class="step-card">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h3>📹 Pendant la semaine (Lundi à Samedi)</h3>
+                                <p>À <strong>n'importe quel moment</strong> quand une pensée, une idée ou une réflexion te vient :</p>
+                                <ul>
+                                    <li>🎥 Prends ton téléphone</li>
+                                    <li>⏱️ Enregistre une <strong>vidéo de 1-2 minutes</strong></li>
+                                    <li>💭 Exprime ce que tu ressens, ce que tu penses, ce qui te marque</li>
+                                    <li>📱 Pas besoin de perfection, juste de l'authenticité !</li>
+                                </ul>
+                                <div class="step-tip">
+                                    💡 <strong>Astuce :</strong> Garde ces vidéos sur ton téléphone, tu en auras besoin le dimanche !
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 2 -->
+                        <div class="step-card">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h3>🎬 Le dimanche (Récap hebdomadaire)</h3>
+                                <p>C'est le moment de faire le point sur ta semaine :</p>
+                                <ul>
+                                    <li>📺 Regarde toutes les vidéos que tu as faites pendant la semaine</li>
+                                    <li>🎥 Enregistre <strong>UNE vidéo finale</strong> qui résume tes réflexions</li>
+                                    <li>🌟 Parle de ce qui t'a marqué, de tes découvertes, de ton évolution</li>
+                                    <li>⏱️ Prends le temps qu'il faut (pas de limite !)</li>
+                                </ul>
+                                <div class="step-tip">
+                                    💡 <strong>Conseil :</strong> Cette vidéo est comme un condensé de ta semaine, ton "résumé personnel"
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 3 -->
+                        <div class="step-card">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h3>📤 Publier sur YouTube</h3>
+                                <p>Une fois ta vidéo du dimanche terminée :</p>
+                                <ul>
+                                    <li>🔒 Publie-la sur <strong>YouTube en mode PRIVÉ</strong></li>
+                                    <li>🔗 Copie le lien de la vidéo</li>
+                                    <li>✨ C'est tout ! Personne ne pourra voir ta vidéo sauf toi</li>
+                                </ul>
+                                <div class="step-tip">
+                                    🔐 <strong>Sécurité :</strong> En mode privé, seul toi (et les personnes ayant le lien) peuvent voir la vidéo
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 4 -->
+                        <div class="step-card">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h3>📝 Ajouter à ton journal</h3>
+                                <p>De retour sur cette plateforme :</p>
+                                <ul>
+                                    <li>➕ Va dans <strong>"Mes Vidéos"</strong></li>
+                                    <li>🔗 Clique sur <strong>"Ajouter une vidéo"</strong></li>
+                                    <li>📋 Colle le lien YouTube</li>
+                                    <li>🏷️ Ajoute des tags et une description</li>
+                                    <li>💾 Enregistre !</li>
+                                </ul>
+                                <div class="step-tip">
+                                    ✨ <strong>Magie :</strong> Ton journal se génère automatiquement à partir de tes vidéos !
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 5 -->
+                        <div class="step-card">
+                            <div class="step-number">5</div>
+                            <div class="step-content">
+                                <h3>🤖 Explorer avec Mélissia</h3>
+                                <p>Une fois ton journal rempli :</p>
+                                <ul>
+                                    <li>💬 Va dans <strong>"Mon Journal"</strong></li>
+                                    <li>🤖 Parle à <strong>Mélissia</strong>, ton assistante IA</li>
+                                    <li>🔍 Pose-lui des questions : "Quand ai-je parlé de mes projets ?"</li>
+                                    <li>✨ Elle retrouve instantanément les moments dans ton journal !</li>
+                                </ul>
+                                <div class="step-tip">
+                                    💜 <strong>Super pouvoir :</strong> Mélissia te permet de voyager dans tes souvenirs et réflexions !
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Summary Box -->
+                    <div class="summary-box">
+                        <h3>📌 En résumé</h3>
+                        <div class="summary-timeline">
+                            <div class="timeline-item">
+                                <strong>Lundi-Samedi</strong>
+                                <span>→</span>
+                                <span>Vidéos spontanées (1-2 min)</span>
+                            </div>
+                            <div class="timeline-item">
+                                <strong>Dimanche</strong>
+                                <span>→</span>
+                                <span>Regarde tes vidéos + Fais le récap</span>
+                            </div>
+                            <div class="timeline-item">
+                                <strong>Publier</strong>
+                                <span>→</span>
+                                <span>YouTube privé + Ajoute le lien ici</span>
+                            </div>
+                            <div class="timeline-item">
+                                <strong>Explorer</strong>
+                                <span>→</span>
+                                <span>Journal auto + Mélissia IA</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CTA -->
+                    <div style="text-align: center; margin-top: 40px;">
+                        <button class="btn-primary" onclick="switchToTab('videos')" style="font-size: 18px; padding: 18px 36px;">
+                            <i class="fas fa-play-circle"></i>
+                            <span>Commencer mon journal vidéo !</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIDEOS TAB -->
+            <div id="videosTab" class="tab-content">
+                <div class="card">
+                    <h2>Tes vidéos quotidiennes</h2>
+                    <button class="btn-primary" onclick="openAddVideoModal()">
+                        <i class="fas fa-plus"></i>
+                        <span>Ajouter une vidéo</span>
+                    </button>
+
+                    <div class="filters">
+                        <input type="text" class="filter-input" placeholder="🔍 Rechercher..." id="searchInput">
+                        <select class="filter-select" id="filterType">
+                            <option value="all">Tous les types</option>
+                            <option value="daily">Quotidienne</option>
+                            <option value="weekly">Récap hebdo</option>
+                        </select>
+                    </div>
+
+                    <div id="videosGrid" class="video-grid">
+                        <div class="empty-state">
+                            <i class="fas fa-video"></i>
+                            <h3>Tu n'as pas encore de vidéo</h3>
+                            <p>Commence ton journal maintenant ! ✨</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- JOURNAL TAB -->
+            <div id="journalTab" class="tab-content">
+                <!-- IA Mélissia Chat -->
+                <div class="card">
+                    <h2>🤖 Mélissia - Ton assistante IA</h2>
+                    <p style="color: var(--text-secondary); margin-bottom: 20px; line-height: 1.6;">
+                        Pose-moi des questions sur ton passé ! Je vais chercher dans ton journal et te montrer les moments pertinents ✨
+                    </p>
+                    
+                    <!-- Chat Container -->
+                    <div class="ai-chat-container">
+                        <div class="ai-messages" id="aiMessages">
+                            <div class="ai-message ai-message-assistant">
+                                <div class="ai-avatar">
+                                    <i class="fas fa-robot"></i>
+                                </div>
+                                <div class="ai-bubble">
+                                    <p>Coucou Mélissa ! 💜 Je suis Mélissia, ton assistante personnelle.</p>
+                                    <p>Je connais tout ton journal intime et je peux t'aider à retrouver des moments, des émotions ou des réflexions du passé.</p>
+                                    <p><strong>Essaie par exemple :</strong></p>
+                                    <ul>
+                                        <li>"Quand ai-je parlé de mes projets ?"</li>
+                                        <li>"Montre-moi mes moments avec Sarah"</li>
+                                        <li>"Mes réflexions sur l'amitié"</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Suggestions -->
+                        <div class="ai-suggestions" id="aiSuggestions"></div>
+                        
+                        <!-- Input -->
+                        <div class="ai-input-container">
+                            <input 
+                                type="text" 
+                                id="aiInput" 
+                                class="ai-input" 
+                                placeholder="Pose-moi une question sur ton journal..."
+                            >
+                            <button class="btn-ai-send" onclick="sendMessageToMelissia()">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Journal Entries -->
+                <div class="card">
+                    <h2>📖 Tes entrées de journal</h2>
+                    
+                    <div id="journalContent">
+                        <div class="empty-state">
+                            <i class="fas fa-book-open"></i>
+                            <h3>Ton journal est vide</h3>
+                            <p>Ajoute des vidéos pour que je génère ton journal intime 💜</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SETTINGS TAB -->
+            <div id="settingsTab" class="tab-content">
+                <div class="card">
+                    <h2>Paramètres</h2>
+                    
+                    <div class="settings-section">
+                        <h3>🤖 Configuration API Gemini</h3>
+                        <div class="form-group">
+                            <label>Clé API Gemini</label>
+                            <input type="text" id="apiKeyInput" class="filter-input" placeholder="Colle ta clé API ici">
+                        </div>
+                        <div class="api-test">
+                            <button class="btn-primary" onclick="testApiKey()">
+                                <i class="fas fa-check"></i>
+                                <span>Tester la clé</span>
+                            </button>
+                            <div id="apiStatus"></div>
+                        </div>
+                    </div>
+
+                    <div class="settings-section">
+                        <h3>💾 Données</h3>
+                        <button class="btn-primary" onclick="exportData()">
+                            <i class="fas fa-download"></i>
+                            <span>Exporter toutes les données</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- MODAL ADD VIDEO -->
+    <div id="addVideoModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Ajouter une vidéo</h3>
+                <button class="btn-close" onclick="closeModal('addVideoModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="addVideoForm">
+                <div class="form-group">
+                    <label>Lien YouTube (privé)</label>
+                    <input type="url" id="videoUrl" class="filter-input" placeholder="https://youtube.com/watch?v=..." required>
+                </div>
+                <div class="form-group">
+                    <label>Type de vidéo</label>
+                    <select id="videoType" class="filter-select">
+                        <option value="daily">Quotidienne</option>
+                        <option value="weekly">Récap hebdomadaire</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Tags (séparés par des virgules)</label>
+                    <input type="text" id="videoTags" class="filter-input" placeholder="projet, réflexion, amitié">
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea id="videoDesc" placeholder="Décris ce dont tu parles dans cette vidéo..."></textarea>
+                </div>
+                <button type="submit" class="btn-primary">
+                    <i class="fas fa-save"></i>
+                    <span>Enregistrer et transcrire</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- TOAST CONTAINER -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script>
+        // ==================== CONFIGURATION ====================
+        const CONFIG = {
+            correctUsername: 'melissa',
+            correctPassword: 'romain2012',
+            storageKeys: {
+                session: 'melissa_session',
+                videos: 'melissa_videos',
+                journal: 'melissa_journal',
+                apiKey: 'melissa_api_key',
+                montage: 'melissa_montage'
+            }
+        };
+
+        // ==================== UTILITY FUNCTIONS ====================
+        function showToast(message, type = 'info') {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
+                <span>${message}</span>
+            `;
+            document.getElementById('toastContainer').appendChild(toast);
+            setTimeout(() => {
+                toast.style.animation = 'fadeOut 0.3s ease';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        function getYoutubeVideoId(url) {
+            const regex = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/;
+            const match = url.match(regex);
+            return match ? match[1] : null;
+        }
+
+        function formatDate(date) {
+            return new Date(date).toLocaleDateString('fr-FR', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+        }
+
+        // ==================== HEADER SCROLL EFFECT ====================
+        let lastScroll = 0;
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+            
+            lastScroll = currentScroll;
+        });
+
+        // ==================== AUTHENTICATION ====================
+        function checkSession() {
+            const session = localStorage.getItem(CONFIG.storageKeys.session);
+            if (session === 'active') {
+                showApp();
+                loadVideos();
+                loadJournal();
+                loadApiKey();
+            }
+        }
+        
+        function loadApiKey() {
+            const apiKey = localStorage.getItem(CONFIG.storageKeys.apiKey);
+            if (apiKey) {
+                document.getElementById('apiKeyInput').value = apiKey;
+                document.getElementById('apiStatus').innerHTML = '<span class="status-indicator status-success"><i class="fas fa-check"></i> Clé valide</span>';
+            }
+        }
+
+        document.getElementById('loginForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const username = document.getElementById('username').value.trim().toLowerCase();
+            const password = document.getElementById('password').value;
+            const errorDiv = document.getElementById('loginError');
+
+            if (username === CONFIG.correctUsername && password === CONFIG.correctPassword) {
+                localStorage.setItem(CONFIG.storageKeys.session, 'active');
+                showApp();
+                loadVideos();
+                loadJournal();
+                loadApiKey();
+                showToast('Bienvenue Mélissa ! 💜', 'success');
+            } else {
+                errorDiv.textContent = 'Identifiant ou mot de passe incorrect';
+                errorDiv.style.display = 'block';
+                setTimeout(() => errorDiv.style.display = 'none', 3000);
+            }
+        });
+
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            if (confirm('Es-tu sûre de vouloir te déconnecter ?')) {
+                localStorage.removeItem(CONFIG.storageKeys.session);
+                hideApp();
+                showToast('À bientôt Mélissa ! 👋', 'info');
+            }
+        });
+
+        function showApp() {
+            document.getElementById('loginPage').style.display = 'none';
+            document.getElementById('appContainer').style.display = 'block';
+        }
+
+        function hideApp() {
+            document.getElementById('loginPage').style.display = 'flex';
+            document.getElementById('appContainer').style.display = 'none';
+        }
+
+        // ==================== TABS NAVIGATION ====================
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                btn.classList.add('active');
+                const tabId = btn.getAttribute('data-tab') + 'Tab';
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+
+        function switchToTab(tabName) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            
+            const btn = document.querySelector(`[data-tab="${tabName}"]`);
+            if (btn) {
+                btn.classList.add('active');
+                document.getElementById(tabName + 'Tab').classList.add('active');
+            }
+        }
+
+        // ==================== VIDEO MANAGEMENT ====================
+        function openAddVideoModal() {
+            document.getElementById('addVideoModal').classList.add('active');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+
+        document.getElementById('addVideoForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const videoData = {
+                id: Date.now(),
+                url: document.getElementById('videoUrl').value,
+                type: document.getElementById('videoType').value,
+                tags: document.getElementById('videoTags').value.split(',').map(t => t.trim()).filter(t => t),
+                description: document.getElementById('videoDesc').value,
+                date: new Date().toISOString(),
+                thumbnail: null
+            };
+
+            const videoId = getYoutubeVideoId(videoData.url);
+            if (videoId) {
+                videoData.thumbnail = `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`;
+            }
+
+            const videos = getVideos();
+            videos.push(videoData);
+            localStorage.setItem(CONFIG.storageKeys.videos, JSON.stringify(videos));
+
+            generateJournalEntry(videoData);
+
+            closeModal('addVideoModal');
+            document.getElementById('addVideoForm').reset();
+            loadVideos();
+            showToast('Bravo Mélissa ! Ta vidéo est enregistrée 🎉', 'success');
+        });
+
+        function getVideos() {
+            const data = localStorage.getItem(CONFIG.storageKeys.videos);
+            return data ? JSON.parse(data) : [];
+        }
+
+        function loadVideos() {
+            const videos = getVideos();
+            const grid = document.getElementById('videosGrid');
+
+            if (videos.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-video"></i>
+                        <h3>Tu n'as pas encore de vidéo</h3>
+                        <p>Commence ton journal maintenant ! ✨</p>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = videos.map(video => `
+                <div class="video-card">
+                    <img src="${video.thumbnail || 'https://via.placeholder.com/400x225?text=Vidéo'}" alt="Thumbnail" class="video-thumbnail">
+                    <div class="video-info">
+                        <div class="video-title">${video.description || 'Sans titre'}</div>
+                        <div class="video-date">
+                            <i class="fas fa-calendar"></i>
+                            <span>${formatDate(video.date)}</span>
+                        </div>
+                        <div class="video-tags">
+                            ${video.tags.map(tag => `<span class="tag">#${tag}</span>`).join('')}
+                        </div>
+                        <div class="video-actions">
+                            <button class="btn-small btn-watch" onclick="window.open('${video.url}', '_blank')">
+                                <i class="fas fa-play"></i>
+                                <span>Regarder</span>
+                            </button>
+                            <button class="btn-small btn-delete" onclick="deleteVideo(${video.id})">
+                                <i class="fas fa-trash"></i>
+                                <span>Supprimer</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function deleteVideo(id) {
+            if (confirm('Es-tu sûre de vouloir supprimer cette vidéo ?')) {
+                let videos = getVideos();
+                videos = videos.filter(v => v.id !== id);
+                localStorage.setItem(CONFIG.storageKeys.videos, JSON.stringify(videos));
+                loadVideos();
+                showToast('Vidéo supprimée', 'info');
+            }
+        }
+
+        // ==================== JOURNAL ====================
+        function generateJournalEntry(videoData) {
+            const journals = getJournals();
+            const entry = {
+                id: Date.now(),
+                videoId: videoData.id,
+                date: videoData.date,
+                content: `Aujourd'hui, tu as ajouté une nouvelle vidéo "${videoData.description}". Cette vidéo parle de ${videoData.tags.map(t => '#' + t).join(', ')}. C'est une belle étape dans ton journal ! 💜`,
+                type: 'video'
+            };
+            journals.push(entry);
+            localStorage.setItem(CONFIG.storageKeys.journal, JSON.stringify(journals));
+            loadJournal();
+        }
+
+        function getJournals() {
+            const data = localStorage.getItem(CONFIG.storageKeys.journal);
+            return data ? JSON.parse(data) : [];
+        }
+
+        function loadJournal() {
+            const journals = getJournals();
+            const container = document.getElementById('journalContent');
+
+            if (journals.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-book-open"></i>
+                        <h3>Ton journal est vide</h3>
+                        <p>Ajoute des vidéos pour que je génère ton journal intime 💜</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = journals.reverse().map(entry => `
+                <div class="journal-entry" data-entry-id="${entry.id}">
+                    <div class="journal-date">
+                        <i class="fas fa-calendar"></i>
+                        <span>${formatDate(entry.date)}</span>
+                    </div>
+                    <div class="journal-text">${entry.content}</div>
+                </div>
+            `).join('');
+        }
+
+        // ==================== SETTINGS ====================
+        function testApiKey() {
+            const apiKey = document.getElementById('apiKeyInput').value;
+            const statusDiv = document.getElementById('apiStatus');
+
+            if (!apiKey) {
+                showToast('Entre ta clé API d\'abord', 'error');
+                return;
+            }
+
+            localStorage.setItem(CONFIG.storageKeys.apiKey, apiKey);
+            statusDiv.innerHTML = '<span class="status-indicator status-success"><i class="fas fa-check"></i> Clé valide</span>';
+            showToast('Clé API enregistrée avec succès ! ✨', 'success');
+        }
+
+        function exportData() {
+            const data = {
+                videos: getVideos(),
+                journal: getJournals(),
+                exportDate: new Date().toISOString()
+            };
+
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `melissa_journal_${new Date().toISOString().split('T')[0]}.json`;
+            a.click();
+            showToast('Données exportées ! 💾', 'success');
+        }
+
+        // ==================== SEARCH & FILTERS ====================
+        document.getElementById('searchInput')?.addEventListener('input', filterVideos);
+        document.getElementById('filterType')?.addEventListener('change', filterVideos);
+
+        function filterVideos() {
+            loadVideos();
+        }
+
+        // ==================== AI MÉLISSIA ====================
+        function sendMessageToMelissia() {
+            const input = document.getElementById('aiInput');
+            const query = input.value.trim();
+            
+            if (!query) return;
+            
+            // Add user message
+            addAiMessage(query, 'user');
+            input.value = '';
+            
+            // Process query
+            setTimeout(() => {
+                processAiQuery(query);
+            }, 500);
+        }
+        
+        function addAiMessage(text, role = 'assistant', links = []) {
+            const messagesContainer = document.getElementById('aiMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `ai-message ai-message-${role}`;
+            
+            let linksHtml = '';
+            if (links.length > 0) {
+                linksHtml = '<div style="margin-top: 12px;">' + 
+                    links.map(link => `
+                        <div class="ai-entry-link" onclick="scrollToEntry('${link.id}')">
+                            <i class="fas fa-arrow-right"></i>
+                            <span>${link.label}</span>
+                        </div>
+                    `).join('') + 
+                '</div>';
+            }
+            
+            messageDiv.innerHTML = `
+                <div class="ai-avatar">
+                    <i class="fas fa-${role === 'user' ? 'user' : 'robot'}"></i>
+                </div>
+                <div class="ai-bubble">
+                    <p>${text}</p>
+                    ${linksHtml}
+                </div>
+            `;
+            
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+        
+        function processAiQuery(query) {
+            const journals = getJournals();
+            
+            if (journals.length === 0) {
+                addAiMessage("Je ne trouve rien encore dans ton journal ! Ajoute des vidéos pour que je puisse t'aider à explorer tes souvenirs 💜");
+                return;
+            }
+            
+            const lowerQuery = query.toLowerCase();
+            
+            // Search in journal entries
+            const matches = journals.filter(entry => {
+                const content = entry.content.toLowerCase();
+                const date = formatDate(entry.date).toLowerCase();
+                return content.includes(lowerQuery) || date.includes(lowerQuery);
+            });
+            
+            // Search by common keywords
+            const keywords = {
+                'projet': ['projet', 'idée', 'startup', 'business'],
+                'amitié': ['ami', 'amitié', 'sarah', 'copain'],
+                'réflexion': ['réflexion', 'penser', 'philosophie', 'pensée'],
+                'famille': ['famille', 'maman', 'papa', 'frère', 'soeur'],
+                'études': ['étude', 'cours', 'école', 'université', 'examen'],
+                'passé': ['hier', 'avant', 'passé', 'souvenir', 'précédent']
+            };
+            
+            let categoryMatches = [];
+            for (const [category, terms] of Object.entries(keywords)) {
+                if (terms.some(term => lowerQuery.includes(term))) {
+                    categoryMatches = journals.filter(entry => 
+                        terms.some(term => entry.content.toLowerCase().includes(term))
+                    );
+                    break;
+                }
+            }
+            
+            const results = [...new Set([...matches, ...categoryMatches])];
+            
+            if (results.length === 0) {
+                // Generate suggestions
+                const suggestions = generateSuggestions(journals);
+                addAiMessage(
+                    `Je n'ai pas trouvé de correspondance pour "${query}" dans ton journal. 😕\n\nMais j'ai d'autres idées pour toi ! Regarde mes suggestions ci-dessous ⬇️`
+                );
+                showSuggestions(suggestions);
+            } else {
+                const links = results.map((entry, index) => ({
+                    id: entry.id,
+                    label: `${formatDate(entry.date)} - ${entry.content.substring(0, 50)}...`
+                }));
+                
+                addAiMessage(
+                    `J'ai trouvé ${results.length} ${results.length === 1 ? 'entrée' : 'entrées'} pour "${query}" ! 🎉\n\nClique sur les liens ci-dessous pour voir les moments :`,
+                    'assistant',
+                    links.slice(0, 5) // Max 5 results
+                );
+                
+                // Show more suggestions
+                if (results.length > 0) {
+                    const suggestions = generateRelatedSuggestions(results[0]);
+                    showSuggestions(suggestions);
+                }
+            }
+        }
+        
+        function generateSuggestions(journals) {
+            if (journals.length === 0) return [];
+            
+            const suggestions = [
+                "Mes dernières réflexions",
+                "Mes moments importants",
+                "Mes projets"
+            ];
+            
+            // Add date-based suggestions
+            const lastEntry = journals[journals.length - 1];
+            suggestions.push(`Mon journal du ${formatDate(lastEntry.date)}`);
+            
+            return suggestions.slice(0, 4);
+        }
+        
+        function generateRelatedSuggestions(entry) {
+            const suggestions = [
+                "Montre-moi d'autres moments similaires",
+                "Quoi d'autre ce jour-là ?",
+                "Mes réflexions récentes"
+            ];
+            return suggestions;
+        }
+        
+        function showSuggestions(suggestions) {
+            const container = document.getElementById('aiSuggestions');
+            container.innerHTML = suggestions.map(s => 
+                `<div class="ai-suggestion" onclick="useSuggestion('${s}')">${s}</div>`
+            ).join('');
+        }
+        
+        function useSuggestion(suggestion) {
+            document.getElementById('aiInput').value = suggestion;
+            sendMessageToMelissia();
+        }
+        
+        function scrollToEntry(entryId) {
+            // Switch to journal tab if not already there
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.querySelector('[data-tab="journal"]').classList.add('active');
+            document.getElementById('journalTab').classList.add('active');
+            
+            // Reload journal with highlight
+            loadJournal();
+            
+            // Scroll to entry
+            setTimeout(() => {
+                const entries = document.querySelectorAll('.journal-entry');
+                const journals = getJournals().reverse();
+                const index = journals.findIndex(j => j.id == entryId);
+                
+                if (index !== -1 && entries[index]) {
+                    entries[index].classList.add('highlighted');
+                    entries[index].scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    
+                    // Remove highlight after animation
+                    setTimeout(() => {
+                        entries[index].classList.remove('highlighted');
+                    }, 3000);
+                }
+            }, 100);
+        }
+        
+        // Handle Enter key in AI input
+        document.addEventListener('DOMContentLoaded', () => {
+            const aiInput = document.getElementById('aiInput');
+            if (aiInput) {
+                aiInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        sendMessageToMelissia();
+                    }
+                });
+            }
+        });
+
+        // ==================== INITIALIZATION ====================
+        checkSession();
+    </script>
+</body>
+</html>
