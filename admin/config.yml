@@ -1,0 +1,21 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "journal"
+    label: "Journal Intime"
+    folder: "journal"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - {label: "Date", name: "date", widget: "datetime", date_format: "DD/MM/YYYY", time_format: "HH:mm"}
+      - {label: "Titre", name: "title", widget: "string"}
+      - {label: "Lien YouTube", name: "youtube", widget: "string"}
+      - {label: "Type", name: "type", widget: "select", options: ["Quotidienne", "Récap Hebdo"]}
+      - {label: "Tags", name: "tags", widget: "list", default: []}
+      - {label: "Transcription", name: "body", widget: "markdown"}
+      - {label: "Hashtags", name: "hashtags", widget: "list", default: []}
